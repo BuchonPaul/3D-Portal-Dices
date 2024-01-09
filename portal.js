@@ -1,6 +1,5 @@
 import * as THREE from "./node_modules/three/build/three.module.js";
 import * as CANNON from "./node_modules/cannon-es/dist/cannon-es.js";
-import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "./node_modules/three/examples/jsm/loaders/GLTFLoader.js";
 
 // Ce jeu est librement inspiré de Portal dans sa direction artistique
@@ -76,6 +75,7 @@ function initThree() {
   );
   camera.position.set(0, -12, 10);
   camera.position.set(40, 30, 40);
+  camera.lookAt(0, 0, 0);
   scene.add(camera);
 
   // Renderer
@@ -358,7 +358,6 @@ function loadModels() {
             }
             //Quand le cube est cliqué, un certain nombre de fonction sont effectuées pour mettre à jour sa possition, son orientation ...
 
-            controls.enabled = false;
             showClickMarker();
             moveClickMarker(hitPoint);
             moveMovementPlane(hitPoint, camera);
@@ -534,7 +533,6 @@ window.addEventListener("pointermove", (event) => {
 });
 window.addEventListener("pointerup", () => {
   isDragging = false;
-  controls.enabled = true;
   hideClickMarker();
   removeJointConstraint();
 });
@@ -587,7 +585,6 @@ function removeJointConstraint() {
 // ----------------------------------------------------------------------------------------------------------------------------
 
 initThree(); // On lance la fonction THREE, à partir de cette fonction, tout le reste sera éxecuté
-const controls = new OrbitControls(camera, renderer.domElement);
 
 function displayHleper() {
   scene.add(new THREE.CameraHelper(BlueCamera));
@@ -631,7 +628,6 @@ const interval = 1000 / maxFPS;
 
 function animate(currentTime) {
   const elapsed = currentTime - lastTime;
-  controls.update();
   world.fixedStep();
   for (let i = 0; i !== meshes.length; i++) {
     //On met à jour le modèle du cube par rapport à la position de son équivalent Physique
