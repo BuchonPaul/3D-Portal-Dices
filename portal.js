@@ -2,7 +2,6 @@ import * as THREE from "./node_modules/three/build/three.module.js";
 import * as CANNON from "./node_modules/cannon-es/dist/cannon-es.js";
 import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "./node_modules/three/examples/jsm/loaders/GLTFLoader.js";
-import Stats from "./node_modules/three/examples/jsm/libs/stats.module";
 
 // Ce jeu est librement inspiré de Portal dans sa direction artistique
 //THREE
@@ -626,15 +625,11 @@ function updatePortalOrange(cam, portalcam) {
 }
 
 //On gère les FPS
-var stats = new Stats();
-stats.showPanel(0);
-document.body.appendChild(stats.dom);
 let lastTime = 0;
 const maxFPS = 60;
 const interval = 1000 / maxFPS;
 
 function animate(currentTime) {
-  stats.begin();
   const elapsed = currentTime - lastTime;
   controls.update();
   world.fixedStep();
@@ -656,6 +651,5 @@ function animate(currentTime) {
     renderer.setRenderTarget(null);
   }
   renderer.render(scene, camera);
-  stats.end();
   requestAnimationFrame(animate);
 }
