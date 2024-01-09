@@ -1,0 +1,3 @@
+version: 1
+buildCommand: yarn install && yarn vite build
+startCommand: yarn vite
